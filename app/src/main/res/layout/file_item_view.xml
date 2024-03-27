@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:id="@+id/layoutBase">
 
-    <com.etb.filemanager.manager.files.ui.SelectableMaterialCardView
+    <com.manager.filemanager.manager.files.ui.SelectableMaterialCardView
             android:layout_height="75dp"
             android:layout_width="match_parent"
             app:cardCornerRadius="0dp"
@@ -89,5 +89,5 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
-    </com.etb.filemanager.manager.files.ui.SelectableMaterialCardView>
+    </com.manager.filemanager.manager.files.ui.SelectableMaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

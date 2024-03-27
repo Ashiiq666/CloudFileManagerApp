@@ -13,6 +13,6 @@ dependencyResolutionManagement {
         maven("https://jitpack.io")
     }
 }
-rootProject.name = "File Manager Sphere"
+rootProject.name = "CloudFileManager"
 include("app")
 include(":app:benchmark")

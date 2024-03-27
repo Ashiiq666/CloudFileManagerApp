@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- SPDX-License-Identifier: Apache-2.0 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-        android:height="24dp"
-        android:viewportHeight="24.0"
-        android:viewportWidth="24.0"
         android:width="24dp"
-        android:tint="?attr/colorControlNormal">
-    <path
-            android:fillColor="@android:color/white"
-            android:pathData="M15.5,14h-0.79l-0.28,-0.27C15.41,12.59 16,11.11 16,9.5 16,5.91 13.09,3 9.5,3S3,5.91 3,9.5 5.91,16 9.5,16c1.61,0 3.09,-0.59 4.23,-1.57l0.27,0.28v0.79l5,4.99L20.49,19l-4.99,-5zM9.5,14C7.01,14 5,11.99 5,9.5S7.01,5 9.5,5 14,7.01 14,9.5 11.99,14 9.5,14z" />
+        android:height="24dp"
+        android:viewportWidth="24"
+        android:viewportHeight="24"
+        android:autoMirrored="true"
+        android:tint="?colorControlNormal">
+  <path
+          android:pathData="M20.671,19.084L17.187,15.599C19.794,12.115 19.083,7.178 15.6,4.571C12.116,1.964 7.178,2.675 4.571,6.159C1.964,9.642 2.675,14.579 6.159,17.186C8.957,19.28 12.801,19.28 15.6,17.186L19.085,20.671C19.523,21.11 20.233,21.11 20.671,20.671C21.11,20.233 21.11,19.523 20.671,19.085L20.671,19.084ZM10.908,16.514C7.812,16.514 5.302,14.004 5.302,10.908C5.302,7.812 7.812,5.302 10.908,5.302C14.005,5.302 16.515,7.812 16.515,10.908C16.511,14.002 14.003,16.51 10.908,16.514Z"
+          android:fillColor="@color/white" />
 </vector>

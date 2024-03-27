@@ -8,16 +8,16 @@ plugins {
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
     id("org.jetbrains.kotlin.plugin.serialization")
     id("androidx.room")
-    alias(libs.plugins.baselineprofile)
+    //  alias(libs.plugins.baselineprofile)
 
 }
 
 android {
-    namespace = "com.etb.filemanager"
+    namespace = "com.manager.filemanager"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.etb.filemanager"
+        applicationId = "com.manager.filemanager"
         minSdk = 26
         targetSdk = 34
         versionCode = 4
@@ -100,20 +100,6 @@ dependencies {
     // UI Libraries
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.11.0")
-    implementation("com.google.android.material:material:1.11.0")
-    implementation("com.google.android.material:material:1.11.0")
-    implementation("com.google.android.material:material:1.11.0")
-    implementation("com.google.android.material:material:1.11.0")
-    implementation("com.google.android.material:material:1.11.0")
-    implementation("com.google.android.material:material:1.11.0")
-    implementation("com.google.android.material:material:1.11.0")
-    implementation("com.google.android.material:material:1.11.0")
-    implementation("com.google.android.material:material:1.11.0")
-    implementation("com.google.android.material:material:1.11.0")
-    implementation("com.google.android.material:material:1.11.0")
-    implementation("com.google.android.material:material:1.11.0")
-    implementation("com.google.android.material:material:1.11.0")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.preference:preference-ktx:1.2.1")
@@ -209,7 +195,7 @@ dependencies {
     ksp("com.google.dagger:hilt-compiler:2.50")
 
     //Baseline Profile
-    baselineProfile(project(":app:benchmark"))
+    // baselineProfile(project(":app:benchmark"))
 
     //GenerativeAI
     implementation("com.google.ai.client.generativeai:generativeai:0.1.2")

@@ -89,4 +89,15 @@
     <color name="gray_400">#FFBDBDBD</color>
     <color name="gray_600">#FF757575</color>
 
+
+    <color name="pink">#AB59FF</color>
+    <color name="blue">#007AFF</color>
+    <color name="blue1">#338CFF</color>
+    <color name="active_color">#34c759</color>
+    <color name="inactive_color">#8c8c8c</color>
+    <color name="grey">#242631</color>
+    <color name="Background_color">#090D22</color>
+    <color name="submit_button_color">#338CFF</color>
+    <color name="overlayColor">#80000000</color>
+
 </resources>

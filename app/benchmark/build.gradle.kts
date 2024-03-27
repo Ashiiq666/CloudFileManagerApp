@@ -9,11 +9,11 @@
 plugins {
     alias(libs.plugins.com.android.test)
     alias(libs.plugins.kotlinAndroid)
-    alias(libs.plugins.baselineprofile)
+    // alias(libs.plugins.baselineprofile)
 }
 
 android {
-    namespace = "com.etb.benchmark"
+    namespace = "com.manager.benchmark"
     compileSdk = 34
 
     compileOptions {

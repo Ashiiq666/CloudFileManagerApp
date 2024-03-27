@@ -6,7 +6,7 @@
         android:layout_height="match_parent"
         tools:context=".activity.SettingsActivity">
 
-    <com.etb.filemanager.ui.widget.AppBarLayout
+    <com.manager.filemanager.ui.widget.AppBarLayout
             android:id="@+id/appBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
                 android:layout_height="?attr/actionBarSize"
                 app:navigationIcon="@drawable/ic_back_24"
                 />
-    </com.etb.filemanager.ui.widget.AppBarLayout>
+    </com.manager.filemanager.ui.widget.AppBarLayout>
 
     <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"

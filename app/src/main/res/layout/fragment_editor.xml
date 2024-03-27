@@ -6,7 +6,8 @@
              tools:context=".manager.files.editor.EditorFragment">
 
 
-    <com.etb.filemanager.manager.files.editor.CodeEditor android:layout_width="match_parent"
+    <com.manager.filemanager.manager.files.editor.CodeEditor
+            android:layout_width="match_parent"
                                                          android:layout_height="match_parent"
                                                          android:id="@+id/codeEditor"
                                                          android:minHeight="48dp" android:hint="@string/app_name"

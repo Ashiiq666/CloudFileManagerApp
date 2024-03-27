@@ -9,7 +9,7 @@
         android:transitionGroup="true"
         tools:context=".settings.preference.AboutFragment">
 
-    <com.etb.filemanager.ui.widget.AppBarLayout
+    <com.manager.filemanager.ui.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/about_appbar"
@@ -22,7 +22,7 @@
                 app:navigationIcon="@drawable/ic_back_24"
                 app:title="@string/about" />
 
-    </com.etb.filemanager.ui.widget.AppBarLayout>
+    </com.manager.filemanager.ui.widget.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
             android:id="@+id/about_contents"

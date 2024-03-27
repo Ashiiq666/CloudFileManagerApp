@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                     xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                     xmlns:tools="http://schemas.android.com/tools"
-                                                     android:layout_width="match_parent"
-                                                     android:layout_height="match_parent"
-                                                     android:id="@+id/rv_option">
-
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rv_option">
 
     <FrameLayout
             android:id="@+id/standard_bottom_sheet"
             style="@style/Widget.Material3.BottomSheet"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-    >
-        <com.google.android.material.bottomsheet.BottomSheetDragHandleView android:layout_width="match_parent"
-                                                                           android:layout_height="wrap_content"/>
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+        <com.google.android.material.bottomsheet.BottomSheetDragHandleView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -33,7 +34,8 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
                     app:layout_constraintBottom_toTopOf="@+id/divider"
-                    app:layout_constraintVertical_bias="1.0" app:layout_constraintHorizontal_bias="0.048"/>
+                    app:layout_constraintVertical_bias="1.0"
+                    app:layout_constraintHorizontal_bias="0.048"/>
             <View
                     android:id="@+id/divider"
                     android:layout_width="0dp"
@@ -53,7 +55,8 @@
                     android:layout_marginEnd="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider"
-                    app:layout_constraintBottom_toBottomOf="parent" tools:listitem="@layout/file_action"/>
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:listitem="@layout/file_action"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </FrameLayout>

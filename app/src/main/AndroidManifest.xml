@@ -15,7 +15,6 @@
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
 
-
     <application
             android:name=".data.SphereApplication"
             android:allowBackup="true"
@@ -40,7 +39,7 @@
                 android:exported="false" />
         <provider
                 android:name="androidx.core.content.FileProvider"
-                android:authorities="com.etb.filemanager.jn.fileprovider"
+                android:authorities="com.manager.filemanager.jn.fileprovider"
                 android:exported="false"
                 android:grantUriPermissions="true">
             <meta-data
@@ -53,10 +52,12 @@
                 android:exported="true"
                 android:launchMode="singleTask"
                 android:windowSoftInputMode="adjustResize">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
             <intent-filter tools:ignore="AppLinkUrlError">
                 <action android:name="android.intent.action.VIEW" />
@@ -73,7 +74,6 @@
         <activity
                 android:name=".compose.feature.presentation.HomeScreen"
                 android:windowSoftInputMode="adjustResize" />
-
 
         <service
                 android:name=".manager.files.services.FileOperationService"
