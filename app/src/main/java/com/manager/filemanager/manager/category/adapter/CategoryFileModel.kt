@@ -8,64 +8,71 @@ import com.manager.filemanager.settings.preference.Preferences
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class CategoryFileModel(val icon: Int, val title: String, val path: String, val category: Category = Category.GENERIC) :
+data class CategoryFileModel(val icon: Int, val title: String, val path: String, val category: Category = Category.DOCUMENTS) :
     Parcelable
 
 
 enum class Category(){
     IMAGE,
-    MOVIES,
-    MUSIC,
-    GENERIC,
-    APPS,
+    AUDIOS,
+    VIDEOS,
+    DOWNLOADS,
+    APK,
+    DOCUMENTS,
 
 }
 fun getCategories(context: Context): ArrayList<CategoryFileModel> {
     val listCategoryName = Preferences.Behavior.categoryNameList
     val listCategoryPath = Preferences.Behavior.categoryPathList
 
-    val dcimPath =
-        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath
-    val moviesPath =
-        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).absolutePath
-    val documentsPath =
-        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).absolutePath
-    val musicPath =
+    val imagePath =
+        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).absolutePath
+    val audioPath =
         Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC).absolutePath
+
+    val videoPath =
+        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).absolutePath
     val downloadsPath =
         Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).absolutePath
+
+    val documentsPath =
+        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).absolutePath
+
+    val apkPath =
+        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).absolutePath
+
 
 
     val categoryFileModels = ArrayList<CategoryFileModel>()
     categoryFileModels.add(
         CategoryFileModel(
-            R.drawable.ic_image, context.getString(R.string.images), dcimPath, Category.IMAGE
+            R.drawable.ic_image_category, context.getString(R.string.images), imagePath, Category.IMAGE
         )
     )
     categoryFileModels.add(
         CategoryFileModel(
-            R.drawable.ic_video, context.getString(R.string.video), moviesPath, Category.MOVIES
+            R.drawable.ic_music_category, context.getString(R.string.audios), audioPath, Category.AUDIOS
         )
     )
     categoryFileModels.add(
         CategoryFileModel(
-            R.drawable.ic_document, context.getString(R.string.document), documentsPath
+            R.drawable.ic_video_category, context.getString(R.string.videos), videoPath, Category.VIDEOS
         )
     )
     categoryFileModels.add(
         CategoryFileModel(
-            R.drawable.ic_music, context.getString(R.string.music), musicPath
+            R.drawable.ic_download_category, context.getString(R.string.downloads), downloadsPath, Category.DOWNLOADS
         )
     )
 
     categoryFileModels.add(
         CategoryFileModel(
-            R.drawable.ic_download, context.getString(R.string.download), downloadsPath
+            R.drawable.ic_apk_category, context.getString(R.string.apk), apkPath, Category.APK
         )
     )
     categoryFileModels.add(
         CategoryFileModel(
-            R.drawable.file_apk_icon, context.getString(R.string.apps), "", Category.APPS)
+            R.drawable.ic_doc_category, context.getString(R.string.documents), documentsPath, Category.DOCUMENTS)
     )
     if (listCategoryName.isNotEmpty()) {
         for ((index, name) in listCategoryName.withIndex()) {
@@ -81,10 +88,10 @@ fun getCategories(context: Context): ArrayList<CategoryFileModel> {
 fun Category?.getName(context: Context): String{
     return when(this){
         Category.IMAGE -> context.getString(R.string.images)
-        Category.MOVIES -> context.getString(R.string.videos)
-        Category.MUSIC -> context.getString(R.string.songs)
-        Category.GENERIC -> context.getString(R.string.files)
-        Category.APPS -> context.getString(R.string.apps)
+        Category.VIDEOS -> context.getString(R.string.videos)
+        Category.AUDIOS -> context.getString(R.string.songs)
+        Category.DOCUMENTS -> context.getString(R.string.files)
+        Category.APK -> context.getString(R.string.apps)
         else ->  context.getString(R.string.files)
     }
 }

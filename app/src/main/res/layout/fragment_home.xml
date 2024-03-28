@@ -106,7 +106,7 @@
 
 
     </RelativeLayout>
-    <include layout="@layout/include_bottom_sheet_content"/>
+<!--    <include layout="@layout/include_bottom_sheet_content"/>-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

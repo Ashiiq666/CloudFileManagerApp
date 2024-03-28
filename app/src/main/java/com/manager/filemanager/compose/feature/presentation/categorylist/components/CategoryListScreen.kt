@@ -43,15 +43,15 @@ fun CategoryListScreen(
                 navigate = navigate
             )
 
-            Category.MOVIES -> GeneratingMediaList(
+            Category.VIDEOS -> GeneratingMediaList(
                 innerPadding = innerPadding,
                 mimeType = MimeType.VIDEO_MP4,
                 navigate = navigate
             )
 
-            Category.MUSIC -> LoadingBody()
-            Category.GENERIC -> LoadingBody()
-            Category.APPS -> ApkListScreenBody(innerPadding = innerPadding)
+            Category.AUDIOS -> LoadingBody()
+            Category.DOCUMENTS -> LoadingBody()
+            Category.APK -> ApkListScreenBody(innerPadding = innerPadding)
             else -> LoadingBody()
         }
     }

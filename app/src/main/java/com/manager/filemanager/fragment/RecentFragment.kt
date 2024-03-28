@@ -23,6 +23,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.progressindicator.CircularProgressIndicator
@@ -74,20 +75,19 @@ class RecentFragment : Fragment(), ItemListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        cBaseItem = view.findViewById(R.id.cBaseItems)
-        cCategoryFileItem = view.findViewById(R.id.cCategoryItem)
-        cRecentImg = view.findViewById(R.id.cRecentImage)
-        btnAddCategory = view.findViewById(R.id.btnAddCategory)
+//        cBaseItem = view.findViewById(R.id.cBaseItems)
+//        cCategoryFileItem = view.findViewById(R.id.cCategoryItem)
+       //cRecentImg = view.findViewById(R.id.cRecentImage)
         cInternalStorage = view.findViewById(R.id.cInternalStorage)
         // fabChat = view.findViewById(R.id.fab_chat)
 
-        val mnAbout = view.findViewById<ImageView>(R.id.mn_about)
+        //val mnAbout = view.findViewById<ImageView>(R.id.mn_about)
         val aboutFragment = AboutFragment()
 
-        mnAbout.setOnClickListener {
-            (requireActivity() as MainActivity).startNewFragment(aboutFragment)
-        }
-        initStyleView()
+//        mnAbout.setOnClickListener {
+//            (requireActivity() as MainActivity).startNewFragment(aboutFragment)
+//        }
+      //  initStyleView()
         fileUtils = FileUtils()
         setStorageSpaceInGB()
         initCategoryItem()
@@ -107,9 +107,9 @@ class RecentFragment : Fragment(), ItemListener {
 
     @SuppressLint("SuspiciousIndentation")
     fun initCategoryItem() {
-        val recyclerView = requireView().findViewById<RecyclerView>(R.id.recyclerView)
+        val recyclerView = requireView().findViewById<RecyclerView>(R.id.rvCategory)
         val categoryFileModels = getCategories(requireContext())
-        recyclerView.layoutManager = GridLayoutManager(requireContext(), 4)
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
         adapter = CategoryFileModelAdapter(this, categoryFileModels, requireContext())
         recyclerView.adapter = adapter
 
@@ -129,7 +129,7 @@ class RecentFragment : Fragment(), ItemListener {
             val recentImage = withContext(Dispatchers.IO) {
                 fileUtils.getRecentImages(requireContext())
             }
-            recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
+            recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             val adapter = RecentImagemodelAdapter(listener, recentImage, requireContext())
             recyclerView.adapter = adapter
         }
@@ -137,9 +137,9 @@ class RecentFragment : Fragment(), ItemListener {
 
     private fun initClick() {
         val itemStorage = requireView().findViewById<MaterialCardView>(R.id.cInternalStorage)
-        val ivTrash = requireView().findViewById<ImageView>(R.id.mn_trash)
-        val ivSettings = requireView().findViewById<ImageView>(R.id.iv_settings)
-        ivTrash.visibility = View.INVISIBLE
+       // val ivTrash = requireView().findViewById<ImageView>(R.id.mn_trash)
+       // val ivSettings = requireView().findViewById<ImageView>(R.id.iv_settings)
+       // ivTrash.visibility = View.INVISIBLE
         itemStorage.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 requestPermissionLauncher.launch(Manifest.permission.MANAGE_EXTERNAL_STORAGE)
@@ -148,11 +148,11 @@ class RecentFragment : Fragment(), ItemListener {
 
             }
         }
-        ivSettings.setOnClickListener {
-            val settingsIntent: Intent = SettingsActivity().getIntent(requireContext())
-            startActivity(settingsIntent)
-        }
-        btnAddCategory.setOnClickListener { showBottomSheetAddCategory() }
+//        ivSettings.setOnClickListener {
+//            val settingsIntent: Intent = SettingsActivity().getIntent(requireContext())
+//            startActivity(settingsIntent)
+//        }
+//        btnAddCategory.setOnClickListener { showBottomSheetAddCategory() }
 
 //        fabChat.setOnClickListener {
 //            val intent = Intent(requireActivity(), HomeScreen::class.java).apply {
@@ -168,41 +168,44 @@ class RecentFragment : Fragment(), ItemListener {
     }
 
     private fun initStyleView() {
-        cBaseItem.applyBackgroundFromPreferences()
-        cRecentImg.applyBackgroundFromPreferences()
-        cInternalStorage.applyBackgroundFromPreferences()
-        cCategoryFileItem.applyBackgroundFromPreferences()
+//        cBaseItem.applyBackgroundFromPreferences()
+//        cRecentImg.applyBackgroundFromPreferences()
+      //  cInternalStorage.applyBackgroundFromPreferences()
+      //  cCategoryFileItem.applyBackgroundFromPreferences()
     }
 
     @SuppressLint("SetTextI18n", "StringFormatMatches")
     fun setStorageSpaceInGB() {
-        val tvSpaceUsed = requireView().findViewById<TextView>(R.id.tv_space_used)
+       // val tvSpaceUsed = requireView().findViewById<TextView>(R.id.tv_space_used)
         val tvSpaceFree = requireView().findViewById<TextView>(R.id.tv_space_free)
-        val tvSpaceTotal = requireView().findViewById<TextView>(R.id.tv_space_total)
         val tvSpaceOf = requireView().findViewById<TextView>(R.id.tv_space_of)
-        val cpSpace = requireView().findViewById<CircularProgressIndicator>(R.id.cp_space)
+     //   val cpSpace = requireView().findViewById<CircularProgressIndicator>(R.id.cp_space)
         val pbSpace = requireView().findViewById<LinearProgressIndicator>(R.id.pb_space)
 
         val totalSpace = fileUtils.getStorageSpaceInGB(SpaceType.TOTAL)
         val freeSpace = fileUtils.getStorageSpaceInGB(SpaceType.FREE)
         val usedSpace = fileUtils.getStorageSpaceInGB(SpaceType.USED)
-        val animation = ObjectAnimator.ofInt(cpSpace, "progress", 0, usedSpace)
+       // val animation = ObjectAnimator.ofInt(cpSpace, "progress", 0, usedSpace)
+
+        val formattedUsedSpace = String.format("%dGB", usedSpace)
+        val formattedTotalSpace = String.format("%dGB", totalSpace)
+        val formattedFreeSpace = String.format("Free space: %dMB", freeSpace)
 
 
-        tvSpaceUsed.text = getString(R.string.used_space_format, usedSpace)
-        tvSpaceFree.text = getString(R.string.free_space_format, freeSpace)
-        tvSpaceTotal.text = getString(R.string.total_space_format, totalSpace)
-        tvSpaceOf.text = getString(R.string.space_of_format, freeSpace, totalSpace)
+      //  tvSpaceUsed.text = formattedUsedSpace
+        tvSpaceFree.text = formattedFreeSpace
+  //      tvSpaceTotal.text = formattedTotalSpace
+        tvSpaceOf.text = getString(R.string.space_of_format, formattedUsedSpace, formattedTotalSpace)
 
-        animation.duration = 1000
-        animation.start()
+//        animation.duration = 1000
+       // animation.start()
 
         pbSpace.progress = 0
-        animation.duration = 1000
-        animation.addUpdateListener { valueAnimator ->
-            pbSpace.progress = valueAnimator.animatedValue as Int
-        }
-        animation.start()
+//        animation.duration = 1000
+//        animation.addUpdateListener { valueAnimator ->
+//            pbSpace.progress = valueAnimator.animatedValue as Int
+//        }
+//        animation.start()
     }
 
     private fun requestStoragePermission() {
@@ -340,7 +343,7 @@ class RecentFragment : Fragment(), ItemListener {
 
     override fun openFileCategory(path: Path, categoryFileModel: CategoryFileModel) {
         if (isReadStoragePermissionGranted()) {
-            if (categoryFileModel.category == Category.GENERIC) {
+            if (categoryFileModel.category == Category.DOCUMENTS) {
                 val uri = path.fileProviderUri
                 val homeFragment = HomeFragment.newInstance(uri)
                 (requireActivity() as MainActivity).startNewFragment(homeFragment)

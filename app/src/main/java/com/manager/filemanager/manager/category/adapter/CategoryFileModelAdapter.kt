@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.card.MaterialCardView
 import com.manager.filemanager.R
 import com.manager.filemanager.interfaces.manager.ItemListener
 import com.manager.filemanager.interfaces.settings.PopupSettingsListener
@@ -47,9 +48,9 @@ class CategoryFileModelAdapter(private var listener: ItemListener, private var c
     }
 
     class ViewHolder(itemFileView: View) : RecyclerView.ViewHolder(itemFileView) {
-             val itemIcon = itemFileView.findViewById<ImageView>(R.id.imageView)
-             val itemTitle = itemFileView.findViewById<TextView>(R.id.item_title)
-             val itemCategory = itemFileView.findViewById<LinearLayout>(R.id.itemCategory)
+             val itemIcon = itemFileView.findViewById<ImageView>(R.id.ivImage)
+             val itemTitle = itemFileView.findViewById<TextView>(R.id.tvCategoryName)
+             val itemCategory = itemFileView.findViewById<MaterialCardView>(R.id.cvImages)
 
     }
 

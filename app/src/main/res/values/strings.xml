@@ -54,6 +54,7 @@
     <string name="policy_and_terms"><![CDATA[Privacy Policy and Terms & Conditions]]></string>
     <string name="ok">Ok</string>
     <string name="allow">Allow</string>
+    <string name="downloads">Downloads</string>
     <string name="download">Download</string>
     <string name="permission_required">Permission Required</string>
     <string name="permission_required_body">To provide a better user experience, we need to access the files stored on your device. This permission is necessary for the application to load and display images, videos, documents, and other relevant files. Additionally, it is essential to enable features such as file sharing, offline data storage, and document manipulation. We assure you that your data will be handled securely and with privacy in mind. To grant the permission, click "Allow" below.</string>
@@ -62,6 +63,7 @@
 
     <string name="images">Images</string>
     <string name="video">Video</string>
+    <string name="documents">Documents</string>
     <string name="document">Document</string>
     <string name="music">Music</string>
 
@@ -331,5 +333,11 @@
     <string name="basic">Basic</string>
     <string name="extra">Extra</string>
     <string name="message_not_sent">Message not sent</string>
+    <string name="your_files">Your files</string>
+    <string name="audios">Audios</string>
+    <string name="apk">APK</string>
+    <string name="storages">Storages</string>
+    <string name="recent_files">Recent Files</string>
+    <string name="see_all">See all</string>
 
 </resources>

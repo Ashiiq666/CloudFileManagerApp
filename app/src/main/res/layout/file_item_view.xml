@@ -10,7 +10,7 @@
             android:layout_height="75dp"
             android:layout_width="match_parent"
             app:cardCornerRadius="0dp"
-            style="@style/Widget.FileManagerSphere.MaterialCardView.Base"
+            style="@style/Widget.CloudFileManager.MaterialCardView.Base"
             android:id="@+id/itemFile"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

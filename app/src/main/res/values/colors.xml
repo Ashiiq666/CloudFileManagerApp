@@ -99,5 +99,10 @@
     <color name="Background_color">#090D22</color>
     <color name="submit_button_color">#338CFF</color>
     <color name="overlayColor">#80000000</color>
+    <color name="homebg_color">#101219</color>
+    <color name="cardView_color">#151720</color>
+    <color name="light_grey">#5A5C65</color>
+    <color name="light_blue">#5492E2</color>
+
 
 </resources>

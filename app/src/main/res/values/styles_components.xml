@@ -42,26 +42,30 @@
         <item name="android:focusable">true</item>
         <item name="android:background">?attr/selectableItemBackground</item>
     </style>
-    <style name="Widget.FileManagerSphere.MaterialCardView.Base" parent="Widget.Material3.CardView.Filled">
+    <style name="Widget.CloudFileManager.MaterialCardView.Base" parent="Widget.Material3.CardView.Filled">
 <!--
         <item name="cardBackgroundColor">?attr/colorOnSecondary</item>
 -->
         <item name="android:clickable">true</item>
         <item name="android:checkable">true</item>
     </style>
-    <style name="Widget.FileManagerSphere.MaterialCardView.LargeRound" parent="Widget.FileManagerSphere.MaterialCardView.Base">
+    <style name="Widget.CloudFileManager.MaterialCardView.LargeRound" parent="Widget.CloudFileManager.MaterialCardView.Base">
         <item name="cardCornerRadius">@dimen/corner_radius_base</item>
         <item name="cardBackgroundColor">?colorPrimary</item>
         <item name="android:background" />
         <item name="android:clickable">false</item>
         <item name="android:focusable">false</item>
     </style>
-    <style name="Widget.FileManagerSphere.MaterialCardView.Large" parent="Widget.FileManagerSphere.MaterialCardView.Base">
+    <style name="Widget.CloudFileManager.MaterialCardView.Large" parent="Widget.CloudFileManager.MaterialCardView.Base">
         <item name="android:layout_height">@dimen/card_normal_height</item>
     </style>
     <style name="roundedImageView" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">@dimen/corner_radius_base</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.App.CornerSize20Percent" parent="">
+        <item name="cornerSize">18%</item>
     </style>
 
 </resources>
