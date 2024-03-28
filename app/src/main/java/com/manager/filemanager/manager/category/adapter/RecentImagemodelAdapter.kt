@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.imageview.ShapeableImageView
 import com.manager.filemanager.R
 import com.manager.filemanager.interfaces.manager.ItemListener
 import java.nio.file.Paths
@@ -44,7 +45,7 @@ class RecentImagemodelAdapter(private var itemListener: ItemListener, private va
     }
 
     class ViewHolder(itemImageView: View) : RecyclerView.ViewHolder(itemImageView) {
-        val itemImage = itemImageView.findViewById<ImageView>(R.id.imageView)
+        val itemImage = itemImageView.findViewById<ShapeableImageView>(R.id.ivRecentImageItem)
 
 
     }
