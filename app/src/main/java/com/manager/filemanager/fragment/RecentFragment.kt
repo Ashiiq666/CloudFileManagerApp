@@ -1,7 +1,6 @@
 package com.manager.filemanager.fragment
 
 import android.Manifest
-import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -14,7 +13,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
@@ -26,14 +24,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
-import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.manager.filemanager.R
 import com.manager.filemanager.activity.MainActivity
-import com.manager.filemanager.activity.SettingsActivity
 import com.manager.filemanager.compose.core.navigation.CategoryListRoute
 import com.manager.filemanager.compose.feature.presentation.HomeScreen
-import com.manager.filemanager.files.extensions.applyBackgroundFromPreferences
 import com.manager.filemanager.files.util.fileProviderUri
 import com.manager.filemanager.interfaces.manager.ItemListener
 import com.manager.filemanager.manager.category.adapter.Category
@@ -179,26 +174,28 @@ class RecentFragment : Fragment(), ItemListener {
        // val tvSpaceUsed = requireView().findViewById<TextView>(R.id.tv_space_used)
         val tvSpaceFree = requireView().findViewById<TextView>(R.id.tv_space_free)
         val tvSpaceOf = requireView().findViewById<TextView>(R.id.tv_space_of)
-     //   val cpSpace = requireView().findViewById<CircularProgressIndicator>(R.id.cp_space)
+        //   val cpSpace = requireView().findViewById<CircularProgressIndicator>(R.id.cp_space)
         val pbSpace = requireView().findViewById<LinearProgressIndicator>(R.id.pb_space)
 
         val totalSpace = fileUtils.getStorageSpaceInGB(SpaceType.TOTAL)
-        val freeSpace = fileUtils.getStorageSpaceInGB(SpaceType.FREE)
         val usedSpace = fileUtils.getStorageSpaceInGB(SpaceType.USED)
-       // val animation = ObjectAnimator.ofInt(cpSpace, "progress", 0, usedSpace)
+        val totalFreeSpace = totalSpace - usedSpace // Calculate total free space
 
-        val formattedUsedSpace = String.format("%dGB", usedSpace)
-        val formattedTotalSpace = String.format("%dGB", totalSpace)
-        val formattedFreeSpace = String.format("Free space: %dMB", freeSpace)
+        // val animation = ObjectAnimator.ofInt(cpSpace, "progress", 0, usedSpace)
+
+        val formattedUsedSpace = String.format("%d", usedSpace)
+        val formattedTotalSpace = String.format("%d", totalSpace)
+        val formattedFreeSpace = String.format("Free space: %d GB", totalFreeSpace)
 
 
-      //  tvSpaceUsed.text = formattedUsedSpace
+        //  tvSpaceUsed.text = formattedUsedSpace
         tvSpaceFree.text = formattedFreeSpace
-  //      tvSpaceTotal.text = formattedTotalSpace
-        tvSpaceOf.text = getString(R.string.space_of_format, formattedUsedSpace, formattedTotalSpace)
+        //      tvSpaceTotal.text = formattedTotalSpace
+        tvSpaceOf.text =
+            getString(R.string.space_of_format, formattedUsedSpace, formattedTotalSpace)
 
 //        animation.duration = 1000
-       // animation.start()
+        // animation.start()
 
         pbSpace.progress = 0
 //        animation.duration = 1000

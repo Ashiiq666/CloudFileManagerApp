@@ -103,6 +103,8 @@
     <color name="cardView_color">#151720</color>
     <color name="light_grey">#5A5C65</color>
     <color name="light_blue">#5492E2</color>
+    <color name="text_subtitle_color">#80FFFFFF</color>
+
 
 
 </resources>

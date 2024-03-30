@@ -175,7 +175,7 @@
     <string name="free_space_format">%s GB</string>
     <string name="total_space_format">%s GB</string>
     <string name="used_space_format">%s GB</string>
-    <string name="space_of_format">Free space: %1$s GB of %2$s GB</string>
+    <string name="space_of_format">%1$s GB / %2$s GB</string>
 
     <!--Preferences-->
     <string name="pref_key_view_file_information">view_file_information</string>
@@ -297,6 +297,8 @@
     <string name="corner_family_cut_top_right_bottom">Cut (Top Right and Bottom)</string>
 
     <string name="files">Files</string>
+    <string name="items_count_format">Items</string>
+    <string name="item_count_format">Item</string>
 
     <string name="dialog_image_viewer">Image viewer</string>
     <string name="title_activity_media_view">MediaViewActivity</string>

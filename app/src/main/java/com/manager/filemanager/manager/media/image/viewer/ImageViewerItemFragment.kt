@@ -70,7 +70,7 @@ class ImageViewerItemFragment : Fragment() {
                 Glide.with(requireContext()).load(path).diskCacheStrategy(DiskCacheStrategy.ALL)
                     .apply(
                         RequestOptions().override(imageWidth, imageHeight)
-                            .placeholder(R.drawable.ic_image)
+                            .placeholder(R.drawable.ic_image_category)
                     ).into(shapeableImageView)
             } catch (e: Exception) {
                 e.printStackTrace()

@@ -18,7 +18,11 @@ class MimeTypeHelper(private val context: Context) {
     private fun getDrawableResourceId(fileExtension: String?): Int {
         return when (fileExtension) {
             "apk" -> R.drawable.file_apk_icon
-            "jpg", "jpeg", "png", "gif" -> R.drawable.ic_image
+            "jpg", "jpeg", "png", "gif" -> R.drawable.ic_image_category
+            "mp4", "mkv", "avi", "webm" -> R.drawable.ic_video_category
+            "mp3", "wav", "flac", "ogg" -> R.drawable.ic_music_category
+            "zip", "rar", "7z", "tar", "gz" -> R.drawable.ic_doc_category
+
             // Adicione outros MIME types e seus respectivos ícones aqui
             else -> 0
         }

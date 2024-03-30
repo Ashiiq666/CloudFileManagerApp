@@ -6,7 +6,7 @@
         android:layout_height="match_parent"
         android:padding="8dp"
         android:elevation="4dp"
-
+        android:background="@color/Background_color"
         tools:context=".manager.files.ui.dialogs.BottomSheetInstallAPK"
        >
 

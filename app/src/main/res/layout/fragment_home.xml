@@ -9,6 +9,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/homebg_color"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -18,15 +19,20 @@
                 android:id="@+id/appBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/colorPrimaryContainer"
+                android:backgroundTint="@color/homebg_color"
                 app:liftOnScroll="true">
 
             <com.google.android.material.appbar.MaterialToolbar
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
+                    android:layout_height="wrap_content"
                     android:id="@+id/topAppBar"
+                    app:subtitleTextAppearance="@style/ShapeAppearanceOverlay.App.CornerSize20Percent"
+                    app:navigationIcon="@drawable/navigationbar"
+                    app:titleTextColor="@color/white"
+                    app:subtitleTextColor="@color/text_subtitle_color"
                     app:menu="@menu/menu_file_list"
-                    app:subtitle="Folders e files"
+                    android:layout_marginTop="12dp"
+                    app:subtitle="16 Folders"
                     app:title="@string/files"
 
                     />
@@ -41,72 +47,72 @@
                 android:id="@+id/recyclerView"
                />
 
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:ignore="MissingConstraints"
+                android:id="@+id/relativeLayout">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab_create_file"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/file_generic_icon"
+                    app:tint="@null"
+                    app:elevation="6dp"
+                    style="?attr/floatingActionButtonSmallSecondaryStyle"
+                    app:pressedTranslationZ="12dp"
+                    android:visibility="gone"
+                    android:background="?attr/colorPrimary"
+                    android:layout_above="@id/fab_create_folder"
+                    android:layout_alignEnd="@id/fab_create_folder"
+                    android:contentDescription="@string/fab_menu_action_create_file"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginBottom="10dp"
+                    tools:visibility="visible" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab_create_folder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/file_directory_icon"
+                    app:tint="@null"
+                    app:elevation="6dp"
+                    style="?attr/floatingActionButtonSmallSecondaryStyle"
+                    app:pressedTranslationZ="12dp"
+                    android:visibility="gone"
+                    android:layout_above="@id/mfab"
+                    android:contentDescription="@string/fab_menu_action_create_folder"
+                    android:layout_alignEnd="@id/mfab"
+                    android:background="?attr/colorPrimary"
+                    android:layout_marginRight="1dp"
+                    tools:visibility="visible" />
+
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/mfab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/add_icon_white_24dp"
+                    app:tint="?attr/colorOnPrimaryContainer"
+                    style="?attr/floatingActionButtonStyle"
+                    android:backgroundTint="@color/blue1"
+                    app:pressedTranslationZ="12dp"
+                    android:contentDescription="@string/dialog_new_file"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="16dp" />
+
+
+        </RelativeLayout>
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
-
-    <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:ignore="MissingConstraints"
-            android:id="@+id/relativeLayout">
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_create_file"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/file_generic_icon"
-                app:tint="@null"
-                app:elevation="6dp"
-                style="?attr/floatingActionButtonSmallSecondaryStyle"
-                app:pressedTranslationZ="12dp"
-                android:visibility="gone"
-                android:background="?attr/colorPrimary"
-                android:layout_above="@id/fab_create_folder"
-                android:layout_alignEnd="@id/fab_create_folder"
-                android:contentDescription="@string/fab_menu_action_create_file"
-                android:layout_marginEnd="0dp"
-                android:layout_marginBottom="10dp"
-                tools:visibility="visible" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_create_folder"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/file_directory_icon"
-                app:tint="@null"
-                app:elevation="6dp"
-                style="?attr/floatingActionButtonSmallSecondaryStyle"
-                app:pressedTranslationZ="12dp"
-                android:visibility="gone"
-                android:layout_above="@id/mfab"
-                android:contentDescription="@string/fab_menu_action_create_folder"
-                android:layout_alignEnd="@id/mfab"
-                android:background="?attr/colorPrimary"
-                android:layout_marginRight="1dp"
-                tools:visibility="visible"/>
-
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/mfab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/add_icon_white_24dp"
-                app:tint="?attr/colorOnPrimaryContainer"
-                style="?attr/floatingActionButtonStyle"
-                android:backgroundTint="@color/blue1"
-                app:pressedTranslationZ="12dp"
-                android:contentDescription="@string/dialog_new_file"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="16dp"/>
-
-
-    </RelativeLayout>
-<!--    <include layout="@layout/include_bottom_sheet_content"/>-->
+        <include layout="@layout/include_bottom_sheet_content"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -170,6 +170,7 @@ class FileModelAdapter(
     }
 
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(
         FileItemViewBinding.inflate(parent.context.layoutInflater, parent, false)
     ).apply {
@@ -183,6 +184,7 @@ class FileModelAdapter(
         throw UnsupportedOperationException()
     }
 
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: List<Any>) {
         bindViewHolderAnimation(holder)
         val file = getItem(position)
@@ -191,6 +193,23 @@ class FileModelAdapter(
         val mimeType = FileUtil().getMimeType(null, filePath)
         val selected = file in selectedFiles
         val isDirectory = file.isDirectory
+        val itemCount = FileUtil().getItemCountOfFolder(file.filePath) // Get item count of the folder
+        if (file.isDirectory) {
+            // If it's a folder, display the item count
+            val itemCountText = if (itemCount <= 1) {
+                "$itemCount item"
+            } else {
+                "$itemCount items"
+            }
+            binding.fileSize.text = itemCountText
+        } else {
+            // If it's a file, display the file size
+            binding.fileSize.text = FileUtils().getFileSizeFormatted(file.fileSize)
+        }
+
+
+
+
         currentPath = file.filePath
         binding.itemFile.isChecked = selected
         if (payloads.isNotEmpty()) {
@@ -211,7 +230,6 @@ class FileModelAdapter(
 
 
         binding.fileTitle.text = file.fileName
-        binding.fileSize.text = FileUtils().getFileSizeFormatted(file.fileSize)
         binding.fileDate.text = FileUtils().getFormatDateFile(filePath, true)
 
         binding.itemFile.setOnClickListener {
@@ -265,20 +283,20 @@ class FileModelAdapter(
         iconFile.shapeAppearanceModel = shapeAppearanceModel
 
 
-        binding.fileDate.visibility = when (viewFileInformationOption) {
-            InterfacePreferences.ViewFileInformationOption.DATE_ONLY -> if (isDir) View.GONE else View.VISIBLE
-            InterfacePreferences.ViewFileInformationOption.EVERYTHING -> if (isDir) View.GONE else View.VISIBLE
-            else -> {
-                View.GONE
-            }
-        }
-        binding.fileSize.visibility = when (viewFileInformationOption) {
-            InterfacePreferences.ViewFileInformationOption.SIZE_ONLY -> if (isDir) View.GONE else View.VISIBLE
-            InterfacePreferences.ViewFileInformationOption.EVERYTHING -> if (isDir) View.GONE else View.VISIBLE
-            else -> {
-                View.GONE
-            }
-        }
+//        binding.fileDate.visibility = when (viewFileInformationOption) {
+//            InterfacePreferences.ViewFileInformationOption.DATE_ONLY -> if (isDir) View.GONE else View.VISIBLE
+//            InterfacePreferences.ViewFileInformationOption.EVERYTHING -> if (isDir) View.GONE else View.VISIBLE
+//            else -> {
+//                View.VISIBLE
+//            }
+//        }
+//        binding.fileSize.visibility = when (viewFileInformationOption) {
+//            InterfacePreferences.ViewFileInformationOption.SIZE_ONLY -> if (isDir) View.GONE else View.VISIBLE
+//            InterfacePreferences.ViewFileInformationOption.EVERYTHING -> if (isDir) View.GONE else View.VISIBLE
+//            else -> {
+//                View.GONE
+//            }
+//        }
     }
 
 
@@ -305,7 +323,7 @@ class FileModelAdapter(
     }
 
     private fun loadImageFromDirectory(binding: FileItemViewBinding) {
-        val icFolder = AppCompatResources.getDrawable(mContext, R.drawable.ic_folder)!!
+        val icFolder = AppCompatResources.getDrawable(mContext, R.drawable.ic_home_folder)!!
 //        icFolder.setTint(getTintForIcons())
 //        binding.iconFile.setColorFilter(getTintForIcons(), PorterDuff.Mode.SRC_IN)
 

@@ -4,28 +4,12 @@
         <item>@string/follow_the_system</item>
         <item>@string/light_theme</item>
         <item>@string/dark_theme</item>
-        <item>@string/pink_theme</item>
-        <item>@string/green_theme_light_mode</item>
-        <item>@string/green_theme_dark_mode</item>
-        <item>@string/blue_theme_light_mode</item>
-        <item>@string/blue_theme_dark_mode</item>
-        <item>@string/red_theme_light_mode</item>
-        <item>@string/red_theme_dark_mode</item>
-        <item>@string/dynamic_colors</item>
     </string-array>
 
     <string-array name="themes_values">
         <item>FOLLOW_SYSTEM</item>
         <item>LIGHT_THEME</item>
         <item>DARK_THEME</item>
-        <item>PINK_THEME</item>
-        <item>GREEN_THEME_LIGHT</item>
-        <item>GREEN_THEME_DARK</item>
-        <item>BLUE_THEME_LIGHT</item>
-        <item>BLUE_THEME_DARK</item>
-        <item>RED_THEME_LIGHT</item>
-        <item>RED_THEME_DARK</item>
-        <item>DYNAMIC_COLORS</item>
     </string-array>
 
     <!--Interface-->

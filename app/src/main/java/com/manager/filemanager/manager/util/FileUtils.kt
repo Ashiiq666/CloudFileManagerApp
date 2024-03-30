@@ -65,7 +65,7 @@ class FileUtils {
             return appInfo.loadIcon(pm)
         } catch (e: Exception){
             val colorPrimaryInverse = colorUtil.getColorPrimaryInverse(context)
-            val iconApk = context.getDrawable(R.drawable.file_apk_icon)!!
+            val iconApk = context.getDrawable(R.drawable.ic_apk_category)!!
             colorUtil.setTintDrawable(colorPrimaryInverse, iconApk)
             return iconApk
         }
@@ -86,12 +86,12 @@ class FileUtils {
 
     // get date file
     fun formatDateShort(date: Date): String {
-        val dateFormat = SimpleDateFormat("d 'de' MMM", Locale.getDefault())
+        val dateFormat = SimpleDateFormat("dd MMM hh:mm a", Locale.getDefault())
         return dateFormat.format(date)
     }
 
     fun formatDateLong(date: Date): String {
-        val dateFormat = SimpleDateFormat("d 'de' MMM. 'de' yyyy HH:mm:ss", Locale.getDefault())
+        val dateFormat = SimpleDateFormat("dd MMM hh:mm a", Locale.getDefault())
         return dateFormat.format(date)
     }
 
@@ -128,8 +128,8 @@ class FileUtils {
         return when {
             fileIsApk(file) -> getIconApk(context, file.absolutePath)
             fileIsArchive(file) -> iconUtil.getIconArchive(context)
-           // isImage(file) -> iconUtil.getDrawablePreviewFromPath(context, file.absolutePath, 29, 30)
-          //  isVideo(file) -> iconUtil.getVideoPreviewFromPath(context, file.absolutePath)
+            isImage(file) -> iconUtil.getPreviewImage(context)
+            isVideo(file) -> iconUtil.getPreviewVideo(context)
             else -> iconUtil.getIconFolder(context)
         }
     }
@@ -146,12 +146,12 @@ class FileUtils {
 
     private fun isImage(file: File): Boolean{
         val fileExtension = getFileExtension(file)
-        return fileExtension in listOf("png", "jpg", "jpeg")
+        return fileExtension in listOf("png", "jpg", "jpeg", "gif", "bmp", "webp", "heic", "heif", "tiff", "svg")
     }
 
     private fun isVideo(file: File): Boolean{
         val fileExtension = getFileExtension(file)
-        return fileExtension in listOf("mp4")
+        return fileExtension in listOf("mp4", "mkv", "avi", "webm", "flv", "3gp", "mov", "wmv", "mpeg")
     }
 
 
@@ -272,7 +272,9 @@ class FileUtils {
                 var count = 0
                 while (cursor.moveToNext() && count < 11) {
                     val imagePath = cursor.getString(imagePathColumn)
-                    recentImageModelList.add(RecentImageModel(imagePath))
+                    val imageTitle = File(imagePath).name
+                    val imageTime = getFormatDateFile(imagePath, true)
+                    recentImageModelList.add(RecentImageModel(imagePath, imageTitle, imageTime))
                     count++
                 }
             }

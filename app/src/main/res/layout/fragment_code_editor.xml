@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
-                                              xmlns:app="http://schemas.android.com/apk/res-auto"
-                                              xmlns:tools="http://schemas.android.com/tools"
-                                              android:id="@+id/editor_container"
-                                              android:layout_width="match_parent"
-                                              android:layout_height="match_parent"
-                                              android:fitsSystemWindows="true"
-                                              android:orientation="vertical">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/editor_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
+
     <com.google.android.material.appbar.MaterialToolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimaryContainer"
             android:theme="?attr/actionBarTheme"
-            android:minHeight="?attr/actionBarSize" android:id="@+id/topAppBar"
-            app:menu="@menu/menu_code_editor_actions" app:title="@string/app_name"
-           />
+            android:minHeight="?attr/actionBarSize"
+            android:id="@+id/topAppBar"
+            app:menu="@menu/menu_code_editor_actions"
+            app:title="@string/app_name" />
 
 
     <io.github.rosemoe.sora.widget.CodeEditor

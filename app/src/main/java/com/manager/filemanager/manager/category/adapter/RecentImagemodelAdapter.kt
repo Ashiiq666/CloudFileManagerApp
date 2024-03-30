@@ -5,7 +5,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -28,15 +28,19 @@ class RecentImagemodelAdapter(private var itemListener: ItemListener, private va
     override fun onBindViewHolder(holder: RecentImagemodelAdapter.ViewHolder, position: Int) {
         val recentImageViewModel = recentImageModel[position]
         val imagePath = recentImageViewModel.imagePath
+        val imageTitle = recentImageViewModel.imageTitle
+        val imageTime = recentImageViewModel.imageTime
         val mPath = Paths.get(imagePath)
 
         Glide.with(mContext)
             .load(imagePath)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .apply(RequestOptions().placeholder(R.drawable.ic_image))
+            .apply(RequestOptions().placeholder(R.drawable.ic_image_category))
             .into(holder.itemImage)
 
         holder.itemImage.setOnClickListener { itemListener.openItemWith(mPath) }
+        holder.imageTitle.text = imageTitle
+        holder.imageTime.text = imageTime
 
     }
 
@@ -46,6 +50,8 @@ class RecentImagemodelAdapter(private var itemListener: ItemListener, private va
 
     class ViewHolder(itemImageView: View) : RecyclerView.ViewHolder(itemImageView) {
         val itemImage = itemImageView.findViewById<ShapeableImageView>(R.id.ivRecentImageItem)
+        val imageTitle = itemImageView.findViewById<TextView>(R.id.tvRecentImageTitle)
+        val imageTime = itemImageView.findViewById<TextView>(R.id.tvRecentImageTime)
 
 
     }

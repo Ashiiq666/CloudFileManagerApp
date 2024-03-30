@@ -57,6 +57,22 @@ class FileUtil {
         context.startActivity(intent)
     }
 
+    fun getItemCountOfFolder(folderPath: String): Int {
+        val folder = File(folderPath)
+        if (!folder.isDirectory) return 0
+
+        var itemCount = 0
+        val files = folder.listFiles()
+        if (files != null) {
+            for (file in files) {
+                if (file.isDirectory || file.isFile) {
+                    itemCount++
+                }
+            }
+        }
+        return itemCount
+    }
+
     fun shareFiles(filePaths: List<String>, context: Context) {
         //val context = ContextUtils.getContext()
         val files = ArrayList<File>()
