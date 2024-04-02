@@ -10,6 +10,7 @@ import com.manager.filemanager.R
 import com.manager.filemanager.data.di.BreadItem
 import com.manager.filemanager.interfaces.manager.BreadCrumbItemClickListener
 import com.manager.filemanager.interfaces.settings.util.click
+import timber.log.Timber
 
 class BreadCrumbAdapter(var breadCrumbItemClickListener: BreadCrumbItemClickListener) :
     RecyclerView.Adapter<BreadCrumbAdapter.ViewHolder>() {
@@ -37,6 +38,7 @@ class BreadCrumbAdapter(var breadCrumbItemClickListener: BreadCrumbItemClickList
         } else {
             holder.breadCrumbSeparator.visibility = View.VISIBLE
         }
+        Timber.tag("BFlow").d("BFlow: ${item.title}")
         holder.breadCrumbTitle.text = item.title
     }
 
@@ -59,6 +61,7 @@ class BreadCrumbAdapter(var breadCrumbItemClickListener: BreadCrumbItemClickList
     }
 
     fun addBreadCrumbItem(item: BreadItem) {
+        Timber.tag("BFlow").d("BreadCrumbAdapter: ${item.title}")
         breadCrumbItemsData.add(item)
         notifyItemInserted(breadCrumbItemsData.size - 1)
     }

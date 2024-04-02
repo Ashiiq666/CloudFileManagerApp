@@ -33,14 +33,13 @@ import com.manager.filemanager.manager.util.FileUtils
 import com.manager.filemanager.settings.preference.Preferences
 import com.manager.filemanager.ui.style.ColorUtil
 import me.zhanghai.android.fastscroll.PopupTextProvider
+import timber.log.Timber
 import java.util.*
 
 
 class FileModelAdapter(
     private val listener: FileListener,
     private val mContext: Context,
-    private val onClick: ((FileModel) -> Unit)? = null,
-
 ) : AnimatedListAdapter<FileModel, FileModelAdapter.ViewHolder>(CALLBACK), PopupTextProvider {
     private var directoryItems: List<FileModel> = emptyList()
     private val basePath = "/storage/emulated/0"
@@ -261,11 +260,6 @@ class FileModelAdapter(
             true
         }
         binding.iconFile.setOnClickListener { selectFile(file) }
-
-        binding.root.click {
-            val position = holder.adapterPosition
-            onClick?.invoke(directoryItems[position])
-        }
     }
 
     private fun setVisibility(isDir: Boolean, mimeType: String?, binding: FileItemViewBinding) {

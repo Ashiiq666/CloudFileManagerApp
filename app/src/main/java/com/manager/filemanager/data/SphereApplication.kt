@@ -2,6 +2,12 @@ package com.manager.filemanager.data
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
+import timber.log.Timber
 
 @HiltAndroidApp
-class SphereApplication : Application()
+class SphereApplication : Application(){
+    override fun onCreate() {
+        super.onCreate()
+    Timber.plant(Timber.DebugTree())
+    }
+}

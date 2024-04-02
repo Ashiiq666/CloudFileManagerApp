@@ -89,6 +89,8 @@ dependencies {
     val navigationVersion = "2.7.7"
     val roomVersion = "2.6.1"
 
+    //Timber
+    implementation("com.jakewharton.timber:timber:5.0.1")
 
     // AndroidX Libraries
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")

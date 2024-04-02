@@ -37,6 +37,7 @@ class CategoryFileModelAdapter(private var listener: ItemListener, private var c
         selectPreferenceUtils = SelectPreferenceUtils.getInstance()
         holder.itemIcon.setImageResource(categoryViewFileModel.icon)
         holder.itemTitle.text = categoryViewFileModel.title
+        holder.itemCount.text = categoryViewFileModel.count
 
         holder.itemCategory.setOnClickListener{
             listener.openFileCategory(path, categoryViewFileModel)
@@ -51,6 +52,7 @@ class CategoryFileModelAdapter(private var listener: ItemListener, private var c
              val itemIcon = itemFileView.findViewById<ImageView>(R.id.ivImage)
              val itemTitle = itemFileView.findViewById<TextView>(R.id.tvCategoryName)
              val itemCategory = itemFileView.findViewById<MaterialCardView>(R.id.cvImages)
+             val itemCount = itemFileView.findViewById<TextView>(R.id.tvCount)
 
     }
 

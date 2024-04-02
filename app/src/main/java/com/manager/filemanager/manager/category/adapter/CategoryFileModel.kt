@@ -6,9 +6,16 @@ import android.os.Parcelable
 import com.manager.filemanager.R
 import com.manager.filemanager.settings.preference.Preferences
 import kotlinx.parcelize.Parcelize
+import java.io.File
 
 @Parcelize
-data class CategoryFileModel(val icon: Int, val title: String, val path: String, val category: Category = Category.DOCUMENTS) :
+data class CategoryFileModel(
+    val icon: Int,
+    val title: String,
+    val count: String,
+    val path: String,
+    val category: Category = Category.DOCUMENTS
+) :
     Parcelable
 
 
@@ -42,43 +49,51 @@ fun getCategories(context: Context): ArrayList<CategoryFileModel> {
         Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).absolutePath
 
 
+    // Get counts for each category
+    val imageCount = File(imagePath).listFiles()?.count()?.toString() ?: "0"
+    val audioCount = File(audioPath).listFiles()?.count()?.toString() ?: "0"
+    val videoCount = File(videoPath).listFiles()?.count()?.toString() ?: "0"
+    val downloadsCount = File(downloadsPath).listFiles()?.count()?.toString() ?: "0"
+    val documentsCount = File(documentsPath).listFiles()?.count()?.toString() ?: "0"
+    val apkCount = File(apkPath).listFiles()?.count()?.toString() ?: "0"
+
 
     val categoryFileModels = ArrayList<CategoryFileModel>()
     categoryFileModels.add(
         CategoryFileModel(
-            R.drawable.ic_image_category, context.getString(R.string.images), imagePath, Category.IMAGE
+            R.drawable.ic_image_category, context.getString(R.string.images),imageCount, imagePath, Category.IMAGE
         )
     )
     categoryFileModels.add(
         CategoryFileModel(
-            R.drawable.ic_music_category, context.getString(R.string.audios), audioPath, Category.AUDIOS
+            R.drawable.ic_music_category, context.getString(R.string.audios),audioCount, audioPath, Category.AUDIOS
         )
     )
     categoryFileModels.add(
         CategoryFileModel(
-            R.drawable.ic_video_category, context.getString(R.string.videos), videoPath, Category.VIDEOS
+            R.drawable.ic_video_category, context.getString(R.string.videos),videoCount, videoPath, Category.VIDEOS
         )
     )
     categoryFileModels.add(
         CategoryFileModel(
-            R.drawable.ic_download_category, context.getString(R.string.downloads), downloadsPath, Category.DOWNLOADS
+            R.drawable.ic_download_category, context.getString(R.string.downloads),downloadsCount, downloadsPath, Category.DOWNLOADS
         )
     )
 
     categoryFileModels.add(
         CategoryFileModel(
-            R.drawable.ic_apk_category, context.getString(R.string.apk), apkPath, Category.APK
+            R.drawable.ic_apk_category, context.getString(R.string.apk),apkCount, apkPath, Category.APK
         )
     )
     categoryFileModels.add(
         CategoryFileModel(
-            R.drawable.ic_doc_category, context.getString(R.string.documents), documentsPath, Category.DOCUMENTS)
+            R.drawable.ic_doc_category, context.getString(R.string.documents),documentsCount, documentsPath, Category.DOCUMENTS)
     )
     if (listCategoryName.isNotEmpty()) {
         for ((index, name) in listCategoryName.withIndex()) {
             val mName = name
             val mPath = listCategoryPath[index]
-            categoryFileModels.add(CategoryFileModel(R.drawable.ic_home_folder, mName, mPath))
+            categoryFileModels.add(CategoryFileModel(R.drawable.ic_home_folder, mName,"", mPath))
         }
     }
 

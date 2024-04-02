@@ -75,6 +75,7 @@ import com.manager.filemanager.ui.util.ThemedFastScroller
 import com.manager.filemanager.ui.view.FabMenu
 import com.manager.filemanager.ui.view.ScrollingViewOnApplyWindowInsetsListener
 import kotlinx.coroutines.*
+import timber.log.Timber
 import java.io.File
 import java.nio.file.*
 import java.util.*
@@ -207,14 +208,7 @@ class HomeFragment : Fragment(), FileListener {
 
 
     private fun initAdapter() {
-        adapter = FileModelAdapter(this, requireContext(),
-            onClick = { file ->
-                if (file.isDirectory) {
-                    updateList(file.filePath)
-                    addPathItem(BreadItem(file.fileName, file.filePath))
-                }
-            }
-        )
+        adapter = FileModelAdapter(this, requireContext())
         recyclerView.adapter = adapter
     }
 
@@ -625,6 +619,10 @@ class HomeFragment : Fragment(), FileListener {
     override fun openFile(file: FileModel) {
         if (file.isDirectory) {
             navigateTo(file.filePath)
+
+
+            updateList(file.filePath)
+            addPathItem(BreadItem(file.fileName, file.filePath))
         } else {
             openFileWith(file)
         }
