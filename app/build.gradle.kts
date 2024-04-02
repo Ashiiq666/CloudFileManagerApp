@@ -194,6 +194,10 @@ dependencies {
     ksp("androidx.hilt:hilt-compiler:1.1.0")
     ksp("com.google.dagger:hilt-compiler:2.50")
 
+    implementation("com.github.SmailBarkouch:android-breadcrumb:1.0.0")
+
+
+
     //Baseline Profile
     // baselineProfile(project(":app:benchmark"))
 

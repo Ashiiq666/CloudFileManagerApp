@@ -29,7 +29,7 @@ val Path.fileProviderUri: Uri
         val uriPath = Uri.encode(toUri().toString())
         return Uri.Builder()
             .scheme(ContentResolver.SCHEME_CONTENT)
-            .authority("com.etb.filemanager.file_provider")
+            .authority("com.manager.filemanager.file_provider")
             .path(uriPath)
             .build()
     }

@@ -20,6 +20,10 @@
         <item name="android:layout">@layout/m3_preference</item>
     </style>
 
+    <style name="AppTheme.PopupMenu" parent="Widget.MaterialComponents.PopupMenu">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
     <style name="Preference.M3.PreferenceScreen" parent="Preference.PreferenceScreen.Material">
         <item name="android:layout">@layout/m3_preference</item>
     </style>

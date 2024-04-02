@@ -9,7 +9,7 @@ enum class MediaType(val displayName: String) {
     APK("Aplicativo")
 }
 
-fun getMidiaType(mimeType: String): MediaType? {
+fun getMediaType(mimeType: String): MediaType? {
     val midiaTypeToMap = mapOf(
         "image/png" to MediaType.IMAGE,
         "video/mp4" to MediaType.VIDEO,

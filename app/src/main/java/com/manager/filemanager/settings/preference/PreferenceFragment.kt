@@ -28,7 +28,6 @@ abstract class PreferenceFragment : PreferenceFragmentCompat() {
             mPrefKey = it.getString(PREF_KEY)
             it.remove(PREF_KEY)
         }
-        // https://github.com/androidx/androidx/blob/androidx-main/preference/preference/res/layout/preference_recyclerview.xml
         val recyclerView = view.findViewById<RecyclerView>(androidx.preference.R.id.recycler_view)
         recyclerView.fitsSystemWindows = true
         recyclerView.clipToPadding = false

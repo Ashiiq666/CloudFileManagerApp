@@ -7,16 +7,17 @@ import android.content.Context
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.AnimationUtils
-import com.manager.filemanager.R
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.manager.filemanager.R
 
 
 class FabMenu(
 
     private var mContext: Context?,
     private var mFab: FloatingActionButton?,
-    private var fabCreateFile: FloatingActionButton?,
-    private var fabCreateFolder: FloatingActionButton?
+    private var fabCreateFile: ExtendedFloatingActionButton?,
+    private var fabCreateFolder: ExtendedFloatingActionButton?
 ) {
 
     private var mIsOpen = false
@@ -79,7 +80,7 @@ class FabMenu(
         mFab!!.startAnimation(
             AnimationUtils.loadAnimation(mContext, R.anim.anim_fab_rotate_backward)
         )
-        mFab!!.setExpanded(true)
+      //  mFab!!.setExpanded(true)
         mIsOpen = true
         //  val item_create_file = (mContext as Activity?)!!.findViewById<View>(R.id.action_create_file)
 
@@ -91,7 +92,7 @@ class FabMenu(
 
     private fun close() {
         mFab!!.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.anim_fab_rotate_forward))
-        mFab!!.setExpanded(false)
+     //   mFab!!.setExpanded(false)
         mIsOpen = false
 
 

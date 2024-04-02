@@ -237,9 +237,9 @@ class FileUtils {
     fun createFolder(folderPath: String, folderName: String): Boolean {
         val folder = File(folderPath, folderName)
         return if (!folder.exists() && folder.mkdirs()) {
-            true // Pasta criada com sucesso
+            true
         } else {
-            false // A pasta já existe ou ocorreu um erro ao criá-la
+            false
         }
     }
 
@@ -250,7 +250,7 @@ class FileUtils {
             file.createNewFile()
         } catch (e: IOException) {
             e.printStackTrace()
-            false // Ocorreu um erro ao criar o arquivo
+            false
         }
     }
 

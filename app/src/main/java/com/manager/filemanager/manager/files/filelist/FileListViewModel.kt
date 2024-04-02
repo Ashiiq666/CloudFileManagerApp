@@ -1,23 +1,40 @@
 
 package com.manager.filemanager.manager.files.filelist
 
+import android.app.Application
 import android.os.Parcelable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
+import com.manager.filemanager.files.app.application
+import com.manager.filemanager.files.provider.archive.common.FilePathProvider
 import com.manager.filemanager.files.util.CloseableLiveData
+import com.manager.filemanager.files.util.ContextUtils.context
+import com.manager.filemanager.files.util.RootPath
 import com.manager.filemanager.files.util.Stateful
 import com.manager.filemanager.manager.adapter.FileModel
 import com.manager.filemanager.settings.preference.Preferences
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import java.io.Closeable
+import java.io.File
+import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
+import java.util.stream.Collectors
+import javax.inject.Inject
+import kotlin.io.path.isDirectory
 
 
 class FileListViewModel : ViewModel() {
+
     private val TAG = "FileViewModel"
+    private val directoryList: MutableList<String> = mutableListOf()
+
+    var firstInit = false
+    private var fileListJob: Job? = null
 
     private val trailLiveData = TrailLiveData()
     val hasTrail: Boolean
@@ -26,11 +43,44 @@ class FileListViewModel : ViewModel() {
         get() = trailLiveData.value?.pendigSate
 
 
+
+
     private val _selectedFilesLiveData = MutableLiveData(fileItemSetOf())
     val selectedFilesLiveData: LiveData<FileItemSet>
         get() = _selectedFilesLiveData
     val selectedFiles: FileItemSet
         get() = _selectedFilesLiveData.value!!
+
+
+    fun updateDirectoryList(path: String) {
+        if (!directoryList.contains(path)) {
+            directoryList.add(path)
+        }
+    }
+
+
+    fun updateDirectoryListWithPos(position: Int) {
+        if (position >= 0 && position < directoryList.size) {
+            directoryList.subList(position + 1, directoryList.size).clear()
+        }
+    }
+
+    fun getStoragePath(rootPath: RootPath): String {
+        val filePathProvider = FilePathProvider(application)
+        return when (rootPath) {
+            RootPath.INTERNAL -> filePathProvider.internalStorageRootPath
+            RootPath.EXTERNAL -> filePathProvider.externalStorageRootPath
+        }
+    }
+
+
+    fun getDirectoryList(directoryPath: String): List<Path> {
+        val directory = Paths.get(directoryPath)
+        return Files.list(directory).filter { it.isDirectory() && Files.isReadable(it) }
+            .collect(Collectors.toList())
+    }
+
+
 
     fun selectFile(file: FileModel, selected: Boolean) {
         selectFiles(fileItemSetOf(file), selected)
@@ -89,13 +139,24 @@ class FileListViewModel : ViewModel() {
 
     fun navigateTo(lastState: Parcelable, path: Path) = trailLiveData.navigateTo(lastState, path)
     fun resetTo(path: Path) = trailLiveData.resetTo(path)
-    fun navigateUp(): Boolean =
-        if (currentPath != Paths.get(Preferences.Behavior.defaultFolder)) trailLiveData.navigateUp() else false
+    fun navigateUp(): Boolean {
+        val currentPathValue = currentPath ?: return false
+        val defaultFolderPath = Paths.get(Preferences.Behavior.defaultFolder).toString()
+        return if (currentPathValue != defaultFolderPath) {
+            trailLiveData.navigateUp()
+        } else {
+            false
+        }
+    }
 
     val currentPathLiveData = trailLiveData.map { it.currentPath }
 
-    val currentPath: Path?
-        get() = currentPathLiveData.value
+   var currentPath: String = ""
+       get() = currentPathLiveData.value.toString()!!
+
+    private val _currentPathLiveData = MutableLiveData<String>()
+    val currentPathLive: LiveData<String>
+        get() = _currentPathLiveData
 
     private val _searchStateLiveData = MutableLiveData(SearchState(false, ""))
     val searchState: SearchState
@@ -124,6 +185,12 @@ class FileListViewModel : ViewModel() {
         _fileListLiveData.reload()
     }
 
+
+    fun initFirstList() {
+        // Initialize with the root directory
+        val rootDirectory = context.filesDir.absolutePath
+        _currentPathLiveData.value = rootDirectory
+    }
 
     val searchViewExpandedLiveData = MutableLiveData(false)
     private val _searchViewQueryLiveData = MutableLiveData("")
@@ -204,6 +271,7 @@ class FileListViewModel : ViewModel() {
         Preferences.Popup.isGridEnabled = isGridEnabled
         _toggleGridLiveData.value = isGridEnabled
     }
+
 
 }
 

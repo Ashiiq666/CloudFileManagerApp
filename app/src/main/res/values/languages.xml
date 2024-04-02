@@ -26,5 +26,12 @@
         <item>vi</item>
         <item>zh-CN</item>
         <item>zh-TW</item>
+        <item>af</item>
+        <item>am</item>
+        <item>az</item>
+        <item>be</item>
+        <item>bg</item>
+        <item>bn</item>
+
     </string-array>
 </resources>

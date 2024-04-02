@@ -7,7 +7,7 @@ import android.media.MediaMetadataRetriever
 import android.util.Log
 import androidx.fragment.app.Fragment
 import com.manager.filemanager.files.provider.archive.common.mime.MediaType
-import com.manager.filemanager.files.provider.archive.common.mime.getMidiaType
+import com.manager.filemanager.files.provider.archive.common.mime.getMediaType
 import com.manager.filemanager.fragment.HomeFragment
 import com.manager.filemanager.manager.adapter.FileModel
 import com.manager.filemanager.manager.util.FileUtils
@@ -35,7 +35,7 @@ class FilePropertiesUtil {
             return getBasicProperties(fileItem)
         }
 
-        val mediaType = getMidiaType(mimeType)
+        val mediaType = getMediaType(mimeType)
         return when (mediaType) {
             MediaType.IMAGE -> getImageProperties(fileItem, mediaType)
             MediaType.VIDEO -> getVideoProperties(fileItem, mediaType)

@@ -51,7 +51,7 @@
     </style>
     <style name="Widget.CloudFileManager.MaterialCardView.LargeRound" parent="Widget.CloudFileManager.MaterialCardView.Base">
         <item name="cardCornerRadius">@dimen/corner_radius_base</item>
-        <item name="cardBackgroundColor">?colorPrimary</item>
+        <item name="cardBackgroundColor">@color/homebg_color</item>
         <item name="android:background" />
         <item name="android:clickable">false</item>
         <item name="android:focusable">false</item>

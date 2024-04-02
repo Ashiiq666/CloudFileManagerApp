@@ -4,8 +4,6 @@ package com.manager.filemanager.manager.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
-import android.graphics.PorterDuff
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -17,34 +15,37 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.manager.filemanager.R
 import com.manager.filemanager.databinding.FileItemViewBinding
-import com.manager.filemanager.files.extensions.createShapeModelBasedOnCornerFamilyPreference
 import com.manager.filemanager.files.provider.archive.common.mime.MimeTypeUtil
 import com.manager.filemanager.files.util.FileUtil
 import com.manager.filemanager.files.util.getColorByAttr
 import com.manager.filemanager.files.util.getDimension
 import com.manager.filemanager.files.util.getDimensionPixelSize
 import com.manager.filemanager.files.util.layoutInflater
+import com.manager.filemanager.interfaces.manager.FileDiffCallback
 import com.manager.filemanager.interfaces.manager.FileListener
+import com.manager.filemanager.interfaces.settings.util.click
 import com.manager.filemanager.manager.files.filelist.FileItemSet
 import com.manager.filemanager.manager.files.filelist.PickOptions
 import com.manager.filemanager.manager.files.filelist.fileItemSetOf
 import com.manager.filemanager.manager.files.ui.AnimatedListAdapter
 import com.manager.filemanager.manager.files.ui.CheckableItemBackground
 import com.manager.filemanager.manager.util.FileUtils
-import com.manager.filemanager.settings.preference.InterfacePreferences
 import com.manager.filemanager.settings.preference.Preferences
 import com.manager.filemanager.ui.style.ColorUtil
-import com.google.android.material.shape.MaterialShapeDrawable
 import me.zhanghai.android.fastscroll.PopupTextProvider
 import java.util.*
 
 
 class FileModelAdapter(
-    private val mContext: Context, private val listener: FileListener
-) : AnimatedListAdapter<FileModel, FileModelAdapter.ViewHolder>(CALLBACK), PopupTextProvider {
+    private val listener: FileListener,
+    private val mContext: Context,
+    private val onClick: ((FileModel) -> Unit)? = null,
 
+) : AnimatedListAdapter<FileModel, FileModelAdapter.ViewHolder>(CALLBACK), PopupTextProvider {
+    private var directoryItems: List<FileModel> = emptyList()
     private val basePath = "/storage/emulated/0"
     private var currentPath = basePath
+
 
     private val defaultComparator: Comparator<FileModel> =
         compareBy<FileModel> { it.fileName }.thenBy { it.fileName }
@@ -170,6 +171,12 @@ class FileModelAdapter(
     }
 
 
+    fun setItems(newItems: List<FileModel>) {
+        val diffResult = DiffUtil.calculateDiff(FileDiffCallback(directoryItems, newItems))
+        directoryItems = newItems
+        diffResult.dispatchUpdatesTo(this)
+    }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(
         FileItemViewBinding.inflate(parent.context.layoutInflater, parent, false)
@@ -255,7 +262,10 @@ class FileModelAdapter(
         }
         binding.iconFile.setOnClickListener { selectFile(file) }
 
-
+        binding.root.click {
+            val position = holder.adapterPosition
+            onClick?.invoke(directoryItems[position])
+        }
     }
 
     private fun setVisibility(isDir: Boolean, mimeType: String?, binding: FileItemViewBinding) {
@@ -269,18 +279,18 @@ class FileModelAdapter(
         val showBackground = true
         val strokeWidth = 10
 
-        val shapeAppearanceModel = createShapeModelBasedOnCornerFamilyPreference()
-        val borderDrawable = MaterialShapeDrawable(shapeAppearanceModel)
+        // val shapeAppearanceModel = createShapeModelBasedOnCornerFamilyPreference()
+        //  val borderDrawable = MaterialShapeDrawable(shapeAppearanceModel)
 
-        if (showBackground && !isMedia) borderDrawable.setTint(colorPrimary) else borderDrawable.setTint(
-            Color.TRANSPARENT
-        )
-        if (showStroke && isMedia) borderDrawable.setStroke(strokeWidth.toFloat(), colorOnPrimary)
+//        if (showBackground && !isMedia) borderDrawable.setTint(colorPrimary) else borderDrawable.setTint(
+//            Color.TRANSPARENT
+//        )
+//        if (showStroke && isMedia) borderDrawable.setStroke(strokeWidth.toFloat(), colorOnPrimary)
 
-       // iconFile.background = borderDrawable
+        // iconFile.background = borderDrawable
         iconFile.scaleType =
             if (isMedia) ImageView.ScaleType.CENTER_CROP else ImageView.ScaleType.CENTER
-        iconFile.shapeAppearanceModel = shapeAppearanceModel
+        //  iconFile.shapeAppearanceModel = shapeAppearanceModel
 
 
 //        binding.fileDate.visibility = when (viewFileInformationOption) {
@@ -305,10 +315,10 @@ class FileModelAdapter(
     ) {
         val icFile = AppCompatResources.getDrawable(mContext, R.drawable.file_generic_icon)
         val tint = getTintForIcons()
-        icFile?.setTint(tint)
+        // icFile?.setTint(tint)
         val iconResourceId = mimeType?.let { MimeTypeUtil().getIconByMimeType(it) } ?: icFile
 
-        binding.iconFile.setColorFilter(tint, PorterDuff.Mode.SRC_IN)
+        //  binding.iconFile.setColorFilter(tint, PorterDuff.Mode.SRC_IN)
         Glide.with(mContext).load(iconResourceId).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
             .apply(RequestOptions().placeholder(icFile)).into(binding.iconFile)
 
@@ -319,7 +329,7 @@ class FileModelAdapter(
 
         binding.iconFile.clearColorFilter()
         Glide.with(mContext).load(path).diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-            .override(50, 50).placeholder(R.drawable.ic_image).into(imageView)
+            .override(50, 50).placeholder(R.drawable.ic_image_category).into(imageView)
     }
 
     private fun loadImageFromDirectory(binding: FileItemViewBinding) {
@@ -334,7 +344,7 @@ class FileModelAdapter(
     private fun getTintForIcons(): Int {
         val colorPrimaryInverse = ColorUtil().getColorPrimaryInverse(mContext)
         val colorControlNormal =
-            mContext.getColorByAttr(com.google.android.material.R.attr.colorControlNormal)
+            mContext.getColor(R.color.file_color)
         val showBackground = true
 
         return if (showBackground) colorPrimaryInverse else colorControlNormal

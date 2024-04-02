@@ -23,12 +23,7 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 private const val ARG_FILE_PROPERTIES = "fileProperties"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [BasicPropertiesFragment.newInstance] factory method to
- * create an instance of this fragment.
- * teste
- */
+
 class BasicPropertiesFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -126,7 +121,7 @@ class BasicPropertiesFragment : Fragment() {
 
     private fun loadImage(path: String, imageView: ImageView) {
         Glide.with(requireContext()).load(path).diskCacheStrategy(DiskCacheStrategy.ALL)
-            .apply(RequestOptions().override(50, 50)).apply(RequestOptions().placeholder(R.drawable.ic_image))
+            .apply(RequestOptions().override(50, 50)).apply(RequestOptions().placeholder(R.drawable.ic_image_category))
             .into(imageView)
 
     }

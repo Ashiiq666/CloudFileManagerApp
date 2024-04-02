@@ -78,7 +78,7 @@ fun getCategories(context: Context): ArrayList<CategoryFileModel> {
         for ((index, name) in listCategoryName.withIndex()) {
             val mName = name
             val mPath = listCategoryPath[index]
-            categoryFileModels.add(CategoryFileModel(R.drawable.ic_folder, mName, mPath))
+            categoryFileModels.add(CategoryFileModel(R.drawable.ic_home_folder, mName, mPath))
         }
     }
 

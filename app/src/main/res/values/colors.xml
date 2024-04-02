@@ -104,6 +104,10 @@
     <color name="light_grey">#5A5C65</color>
     <color name="light_blue">#5492E2</color>
     <color name="text_subtitle_color">#80FFFFFF</color>
+    <color name="floating_action_button_color">#2A2D3B</color>
+    <color name="file_color">#B3ECAE</color>
+    <color name="breadcrumb_color">#4D16212F</color>
+    <color name="empty_text_color">#5F6273</color>
 
 
 

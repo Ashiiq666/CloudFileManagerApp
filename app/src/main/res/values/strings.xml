@@ -126,6 +126,7 @@
     <string name="replace">Replace</string>
     <string name="skip">Skip</string>
     <string name="empty">empty</string>
+    <string name="no_file">No files</string>
     <string name="loading">loading</string>
     <string name="error">Error</string>
     <string name="error_occurred">Error</string>
@@ -338,8 +339,10 @@
     <string name="your_files">Your files</string>
     <string name="audios">Audios</string>
     <string name="apk">APK</string>
+    <string name="internal">Internal Storage</string>
     <string name="storages">Storages</string>
     <string name="recent_files">Recent Files</string>
     <string name="see_all">See all</string>
+    <string name="more">more</string>
 
 </resources>

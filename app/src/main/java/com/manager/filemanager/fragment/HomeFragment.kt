@@ -15,10 +15,13 @@ import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
@@ -27,8 +30,16 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.textfield.TextInputEditText
 import com.manager.filemanager.R
 import com.manager.filemanager.activity.MainActivity
+import com.manager.filemanager.compose.core.presentation.components.BreadCrumbView
+import com.manager.filemanager.data.di.BreadItem
 import com.manager.filemanager.files.extensions.parcelable
 import com.manager.filemanager.files.extensions.sortFileModel
 import com.manager.filemanager.files.provider.archive.common.mime.MimeType
@@ -38,10 +49,12 @@ import com.manager.filemanager.files.provider.archive.common.mime.isASpecificTyp
 import com.manager.filemanager.files.provider.archive.common.mime.isMedia
 import com.manager.filemanager.files.provider.archive.common.properties.*
 import com.manager.filemanager.files.util.*
+import com.manager.filemanager.interfaces.manager.BreadCrumbItemClickListener
 import com.manager.filemanager.interfaces.manager.FileListener
 import com.manager.filemanager.manager.adapter.FileModel
 import com.manager.filemanager.manager.adapter.FileModelAdapter
 import com.manager.filemanager.manager.adapter.ManagerUtil
+import com.manager.filemanager.manager.adapter.loadFileItem
 import com.manager.filemanager.manager.editor.CodeEditorFragment
 import com.manager.filemanager.manager.file.CreateFileAction
 import com.manager.filemanager.manager.file.FileAction
@@ -61,16 +74,10 @@ import com.manager.filemanager.settings.preference.Preferences
 import com.manager.filemanager.ui.util.ThemedFastScroller
 import com.manager.filemanager.ui.view.FabMenu
 import com.manager.filemanager.ui.view.ScrollingViewOnApplyWindowInsetsListener
-import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.*
 import java.io.File
 import java.nio.file.*
 import java.util.*
-import kotlin.io.path.pathString
 
 
 class HomeFragment : Fragment(), FileListener {
@@ -87,12 +94,18 @@ class HomeFragment : Fragment(), FileListener {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: FileModelAdapter
 
+
     private lateinit var mFab: FloatingActionButton
     private lateinit var topAppBar: MaterialToolbar
+    private lateinit var breadCrumbView: BreadCrumbView
+
     private lateinit var standardBottomSheet: FrameLayout
     private lateinit var standardBottomSheetOp: FrameLayout
     private lateinit var bottomSheetProperties: FrameLayout
     private lateinit var bottomSheetRename: FrameLayout
+    private lateinit var emptyLayout: LinearLayout
+    private lateinit var emptyText: AppCompatTextView
+
 
     private lateinit var standardBottomSheetBehavior: BottomSheetBehavior<FrameLayout>
     private lateinit var standardBehaviorOperation: BottomSheetBehavior<FrameLayout>
@@ -129,12 +142,18 @@ class HomeFragment : Fragment(), FileListener {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         super.onViewCreated(view, savedInstanceState)
         initAllBottomSheet()
 
         mFab = view.findViewById(R.id.mfab)
+        breadCrumbView = view.findViewById(R.id.breadcrumb_bar)
         settingsViewModel = SettingsViewModel(requireContext())
         viewModel = ViewModelProvider(this)[FileListViewModel::class.java]
+
+
+        emptyLayout = view.findViewById(R.id.empty_layout)
+        emptyText = view.findViewById(R.id.empty_title)
 
 
         showHiddenFiles = settingsViewModel.getActionShowHiddenFiles()
@@ -152,12 +171,15 @@ class HomeFragment : Fragment(), FileListener {
 
         observeSettings()
         observeViewModel()
+        initAdapter()
+        initBreadListener()
         initFabClick()
+        initFirstList()
+
 
         val spanCount = if (Preferences.Popup.isGridEnabled) 2 else 1
         recyclerView.layoutManager = GridLayoutManager(requireActivity(), spanCount)
-        adapter = FileModelAdapter(requireContext(), this)
-        recyclerView.adapter = adapter
+
         if (Preferences.Behavior.isFastScrollEnabled) {
             val fastScroller = ThemedFastScroller.create(recyclerView)
             recyclerView.setOnApplyWindowInsetsListener(
@@ -167,6 +189,43 @@ class HomeFragment : Fragment(), FileListener {
         lastStateFileList?.let { recyclerView.layoutManager!!.onRestoreInstanceState(it) }
 
     }
+
+
+    private fun initFirstList() {
+        breadCrumbView.addBreadCrumbItem(BreadItem(getString(R.string.internal), null))
+        updateList(viewModel.getStoragePath(RootPath.INTERNAL))
+    }
+
+
+    private fun updateList(directoryPath: String) {
+        with(viewModel) {
+            currentPath = directoryPath
+            updateDirectoryList(directoryPath)
+            adapter.setItems(getDirectoryList(directoryPath).map { it.loadFileItem() })
+        }
+    }
+
+
+    private fun initAdapter() {
+        adapter = FileModelAdapter(this, requireContext(),
+            onClick = { file ->
+                if (file.isDirectory) {
+                    updateList(file.filePath)
+                    addPathItem(BreadItem(file.fileName, file.filePath))
+                }
+            }
+        )
+        recyclerView.adapter = adapter
+    }
+
+    private fun addPathItem(item: BreadItem) {
+        item.path?.let {
+            if (File(it).isDirectory) {
+                breadCrumbView.addBreadCrumbItem(item)
+            }
+        }
+    }
+
 
     private fun observeViewModel() {
         viewModel.currentPathLiveData.observe(viewLifecycleOwner) { onCurrentPathChanged() }
@@ -184,6 +243,29 @@ class HomeFragment : Fragment(), FileListener {
 
 
     }
+
+
+    private fun initBreadListener() {
+        breadCrumbView.setListener(
+            object : BreadCrumbItemClickListener {
+                override fun onItemClick(
+                    item: BreadItem,
+                    position: Int,
+                ) {
+                    val path =
+                        if (position == 0 || item.path == null) {
+                            viewModel.getStoragePath(RootPath.INTERNAL)
+                        } else {
+                            item.path
+                        }
+                    updateList(path)
+                    breadCrumbView.removeItemsWithRange(position)
+                    viewModel.updateDirectoryListWithPos(position)
+                }
+            },
+        )
+    }
+
 
     fun onNewIntent(uri: Uri) {
         navigateTo(fileUtil.getFilePathFromUri(requireContext(), uri).toString())
@@ -215,8 +297,9 @@ class HomeFragment : Fragment(), FileListener {
     }
 
     private fun initFabClick() {
-        val mFabCreateFile: FloatingActionButton = requireView().findViewById(R.id.fab_create_file)
-        val mFabCreateFolder: FloatingActionButton =
+        val mFabCreateFile: ExtendedFloatingActionButton =
+            requireView().findViewById(R.id.fab_create_file)
+        val mFabCreateFolder: ExtendedFloatingActionButton =
             requireView().findViewById(R.id.fab_create_folder)
         val fabMenu = FabMenu(requireContext(), mFab, mFabCreateFile, mFabCreateFolder)
 
@@ -324,6 +407,17 @@ class HomeFragment : Fragment(), FileListener {
     }
 
     private fun getSubtitle(files: List<FileModel>): String {
+        if (files.isEmpty()) {
+            emptyLayout.isVisible = true
+            emptyText.apply {
+                text = getString(R.string.no_file)
+                isVisible = true
+            }
+        } else {
+            emptyLayout.isInvisible = true
+            emptyText.isInvisible = true
+        }
+
         val directoryCount = files.count { it.isDirectory }
         val fileCount = files.size - directoryCount
         val directoryCountText = if (directoryCount > 0) {
@@ -349,6 +443,8 @@ class HomeFragment : Fragment(), FileListener {
             !fileCountText.isNullOrEmpty() -> fileCountText
             else -> getString(R.string.empty)
         }
+
+
     }
 
 
@@ -491,7 +587,7 @@ class HomeFragment : Fragment(), FileListener {
 
 
     private fun createDialogNavigateTo() {
-        val mPath = viewModel.currentPath?.pathString!!
+        val mPath = viewModel.currentPath.toString()
         val title = requireContext().getString(R.string.file_list_action_navigate_to)
         val textPositiveButton = requireContext().getString(R.string.dialog_ok)
 
@@ -1204,7 +1300,7 @@ class HomeFragment : Fragment(), FileListener {
             }
 
             R.id.action_share -> {
-                val mPath = viewModel.currentPath!!.pathString
+                val mPath = viewModel.currentPath
                 shareFiles(null, listOf(mPath))
             }
 
@@ -1238,4 +1334,8 @@ class HomeFragment : Fragment(), FileListener {
 
 
     }
+}
+
+private fun String.resolve(enteredText: String): Path {
+    return Paths.get(this, enteredText)
 }

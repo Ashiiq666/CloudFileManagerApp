@@ -20,5 +20,4 @@ interface FileListener {
     fun showBottomSheetInstallAPK(file: FileModel)
     fun onClickFileAction(file: FileModel, action: CreateFileAction)
 
-
 }
